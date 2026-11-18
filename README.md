@@ -4,9 +4,12 @@ Plataforma web que permite selecionar diferentes modelos de calculadoras cientí
 virtualmente, reproduzindo sua interface e funcionamento. O objetivo é que estudantes possam praticar
 com modelos específicos mesmo sem possuir o dispositivo físico.
 
-> **Status:** protótipo funcional da calculadora científica vertical inspirada na Casio fx‑82MS.
-> As teclas, o visor e o teclado físico já operam sobre um motor de cálculo completo; ainda não há
-> catálogo de modelos nem autenticação.
+> **Status:** MVP funcional da calculadora científica vertical inspirada na Casio fx‑82MS.
+> As teclas, o visor e o teclado físico operam sobre um motor de cálculo próprio, mas o produto
+> **ainda não está 100% funcional**. Algumas funções do modelo físico são simplificadas e ainda não
+> há catálogo de modelos nem autenticação.
+>
+> Entenda o escopo e as limitações em [docs/mvp.md](docs/mvp.md).
 
 ## Tecnologias
 
@@ -58,6 +61,7 @@ O servidor de desenvolvimento é iniciado em `http://localhost:5173` por padrão
 
 ```text
 .
+├── docs/                   # Escopo do MVP, limitações e próximos passos
 ├── public/                 # Arquivos servidos na raiz (favicon)
 ├── src/
 │   ├── assets/             # Recursos estáticos importados pela aplicação
