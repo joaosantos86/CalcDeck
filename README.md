@@ -137,31 +137,3 @@ O servidor de desenvolvimento é iniciado em `http://localhost:5173` por padrão
 | `p`, `a`                | π e Ans                             |
 | `h`                     | Alternar modo hiperbólico           |
 | `F9`                    | Trocar o sinal                      |
-
-### Convenções
-
-- O alias `@/` aponta para `src/` no TypeScript, no Vite e no Vitest.
-- O TypeScript está em modo estrito, com `noUncheckedIndexedAccess`, `noUnusedLocals`,
-  `noUnusedParameters` e `noFallthroughCasesInSwitch`.
-- O Tailwind CSS é configurado via CSS em `src/styles/main.css` (CSS-first, padrão da versão 4).
-  Cores da marca (`brand-*`), superfícies, texto e tipografia ficam disponíveis como tokens.
-- A rota inicial `/` está registrada em `src/router/index.ts`.
-- O Pinia é registrado globalmente em `src/main.ts`; as stores ficam em `src/stores`.
-
-## Identidade visual
-
-- **Cor principal:** índigo/roxo (`brand-400` a `brand-600`).
-- **Fundo:** cinza muito escuro (`surface`, `#09090b`).
-- **Texto:** claro (`foreground`) com apoio de `muted`.
-- **Tipografia:** sans-serif moderna, usando a pilha de fontes do sistema.
-- **Estética:** minimalista, tecnológica e limpa.
-
-## Variáveis de ambiente
-
-Nenhuma variável de ambiente é necessária no momento. Quando surgir essa necessidade, crie um
-`.env.example` documentado e use arquivos `.env*` locais (já ignorados pelo Git).
-
-## Testes
-
-Os testes ficam em diretórios `__tests__` próximos ao código testado, com o sufixo `.spec.ts`.
-O ambiente padrão é `jsdom` e o Vitest reaproveita a configuração do Vite, incluindo o alias `@/`.
