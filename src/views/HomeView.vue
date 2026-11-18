@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import CalculatorScene from '@/components/calculator/CalculatorScene.vue'
+import { useCalculatorKeyboard } from '@/composables/useCalculatorKeyboard'
+
+useCalculatorKeyboard()
 </script>
 
 <template>
@@ -25,7 +28,7 @@ import CalculatorScene from '@/components/calculator/CalculatorScene.vue'
       class="pointer-events-none absolute inset-x-0 bottom-0 z-10 px-5 pb-5 text-center sm:pb-6 [@media(max-height:520px)]:pb-3"
     >
       <p class="text-[11px] tracking-wide text-muted/75">
-        Arraste para girar · Role ou pinça para aproximar
+        Clique nas teclas ou use o teclado · Arraste para girar · Role ou pinça para aproximar
       </p>
     </footer>
   </main>
