@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onUnmounted } from 'vue'
+import { onUnmounted, watch } from 'vue'
 
 import { display } from '@/data/scientificCalculator'
-import { createLcdTexture } from '@/utils/canvasTextures'
+import { useCalculatorStore } from '@/stores/calculator'
+import { createLcdRenderer } from '@/utils/canvasTextures'
 import { createRoundedFrameGeometry, createRoundedPanelGeometry } from '@/utils/geometry'
 
 import { calculatorMaterials } from './calculatorMaterials'
@@ -34,12 +35,20 @@ const panelGeometry = createRoundedPanelGeometry({
   curveSegments: 10,
 })
 
-const displayTexture = createLcdTexture(display.value)
+const calculator = useCalculatorStore()
+const lcd = createLcdRenderer(calculator.displayState)
+
+const stopWatchingDisplay = watch(
+  () => calculator.displayState,
+  (state) => lcd.draw(state),
+  { deep: true },
+)
 
 onUnmounted(() => {
+  stopWatchingDisplay()
   frameGeometry.dispose()
   panelGeometry.dispose()
-  displayTexture.dispose()
+  lcd.texture.dispose()
 })
 </script>
 
@@ -68,7 +77,7 @@ onUnmounted(() => {
 
     <TresMesh :position="[0, 0, display.panelTopZ + 0.001]" :render-order="1">
       <TresPlaneGeometry :args="[display.panelWidth - 0.04, display.panelHeight - 0.04]" />
-      <TresMeshBasicMaterial :map="displayTexture" />
+      <TresMeshBasicMaterial :map="lcd.texture" />
     </TresMesh>
 
     <TresMesh :position="[0, 0, display.panelTopZ + 0.003]" :render-order="2">

@@ -4,14 +4,14 @@ import { onUnmounted } from 'vue'
 
 import { keyBaseZ } from '@/data/scientificCalculator'
 
-const geometry = new CylinderGeometry(0.57, 0.57, 0.055, 40, 1)
+const geometry = new CylinderGeometry(0.67, 0.67, 0.06, 48, 1)
 geometry.rotateX(Math.PI / 2)
 
 onUnmounted(() => geometry.dispose())
 </script>
 
 <template>
-  <TresMesh :position="[0, 0.24, keyBaseZ + 0.022]" :geometry="geometry" receive-shadow>
-    <TresMeshStandardMaterial color="#383a37" :roughness="0.58" :metalness="0.08" />
+  <TresMesh :position="[0, 0.4, keyBaseZ + 0.024]" :geometry="geometry" receive-shadow>
+    <TresMeshStandardMaterial color="#3d3f3b" :roughness="0.54" :metalness="0.06" />
   </TresMesh>
 </template>
