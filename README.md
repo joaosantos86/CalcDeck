@@ -4,8 +4,9 @@ Plataforma web que permite selecionar diferentes modelos de calculadoras cientí
 virtualmente, reproduzindo sua interface e funcionamento. O objetivo é que estudantes possam praticar
 com modelos específicos mesmo sem possuir o dispositivo físico.
 
-> **Status:** protótipo visual 3D da calculadora científica vertical inspirada na Casio fx‑82MS.
-> As teclas e o visor ainda são apenas visuais; não há operações matemáticas, catálogo ou autenticação.
+> **Status:** protótipo funcional da calculadora científica vertical inspirada na Casio fx‑82MS.
+> As teclas, o visor e o teclado físico já operam sobre um motor de cálculo completo; ainda não há
+> catálogo de modelos nem autenticação.
 
 ## Tecnologias
 
@@ -87,12 +88,51 @@ O servidor de desenvolvimento é iniciado em `http://localhost:5173` por padrão
 - `CalculatorBody.vue`, `CalculatorDisplay.vue`, `CalculatorKey.vue` e `NavigationPad.vue` constroem
   o corpo vertical, o LCD, as teclas individuais e o conjunto direcional com geometria 3D real.
 - `src/data/scientificCalculator.ts` define dimensões, inscrições do modelo fx‑82MS e a organização
-  das funções, teclas numéricas e legendas secundárias (SHIFT/ALPHA).
+  das funções, teclas numéricas, legendas secundárias (SHIFT/ALPHA) e a ação executada por cada tecla.
 - `CameraRig.vue` configura a câmera em perspectiva, o enquadramento responsivo e o `OrbitControls`
   com limites de rotação, zoom e deslocamento.
 - `SceneLighting.vue` e `SceneEnvironment.vue` cuidam da iluminação de estúdio, das sombras e das
   reflexões PBR.
-- O visor exibe o valor estático `42.` e ainda não possui interação ou cálculo.
+
+### Motor de cálculo
+
+- `src/utils/calculatorEngine.ts` tokeniza e interpreta a expressão (descida recursiva, sem `eval`),
+  com precedência, parênteses, multiplicação implícita, potências e funções científicas.
+- `src/stores/calculator.ts` guarda a expressão, o cursor, o modo angular (DEG/RAD/GRA), a memória,
+  as variáveis A–D/X/Y/M, o histórico do último resultado e as ações de cada tecla.
+- `src/utils/canvasTextures.ts` desenha o LCD em um canvas reutilizado: linha de expressão com cursor,
+  indicadores (modo, SHIFT, ALPHA, hyp, M, INS) e a linha principal em sete segmentos. O visor é
+  redesenhado sempre que o estado muda.
+- Clicar em uma tecla do modelo 3D (ou usar o teclado físico) dispara as mesmas ações do motor.
+
+#### Funções disponíveis
+
+- Aritmética: `+ − × ÷`, potência (`^` e `x√`), parênteses, sinal negativo, porcentagem e `×10ˣ`.
+- Científicas: `x²`, `x³`, `x⁻¹`, `√`, `∛`, `n!`, `nCr`, `nPr`, `log`, `ln`, `10ˣ`, `eˣ`, `π`, `e`,
+  `sin`, `cos`, `tan` e as inversas com SHIFT, além de hiperbólicas com `hyp`.
+- Coordenadas: `Pol(` e `Rec(`, com os resultados gravados em `X` e `Y`.
+- Memória: `M+`, `RCL`, `STO` (SHIFT + RCL) e variáveis `A`, `B`, `C`, `D`, `X`, `Y`, `M` via ALPHA.
+- Utilidades: `Ans`, `Ran#`, `Rnd`, `ENG`, `° ′ ″` (DMS), `a b/c` (fração), `MODE`/`DRG▶` e `INS`.
+- Edição: `DEL`, `AC`/`OFF`, `ON`, e as setas para mover o cursor pela expressão.
+- Erros: `Syntax ERROR`, `Math ERROR` e `Stack ERROR` aparecem no visor e podem ser corrigidos com
+  `DEL` ou `AC`.
+
+#### Atalhos do teclado físico
+
+| Tecla                   | Ação                                |
+| ----------------------- | ----------------------------------- |
+| `0`–`9`, `.`, `,`       | Digitar números e separador decimal |
+| `+`, `-`, `*`, `/`, `^` | Operadores                          |
+| `(` e `)`               | Parênteses                          |
+| `Enter` ou `=`          | Calcular                            |
+| `Backspace`             | Apagar                              |
+| `Esc`                   | Limpar (AC)                         |
+| `!`, `%`                | Fatorial e porcentagem              |
+| `s`, `c`, `t`           | Seno, cosseno e tangente            |
+| `r`, `l`, `n`           | Raiz, log e log natural             |
+| `p`, `a`                | π e Ans                             |
+| `h`                     | Alternar modo hiperbólico           |
+| `F9`                    | Trocar o sinal                      |
 
 ### Convenções
 
