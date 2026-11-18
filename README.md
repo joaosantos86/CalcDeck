@@ -9,7 +9,7 @@ com modelos específicos mesmo sem possuir o dispositivo físico.
 > **ainda não está 100% funcional**. Algumas funções do modelo físico são simplificadas e ainda não
 > há catálogo de modelos nem autenticação.
 >
-> Entenda o escopo e as limitações em [docs/mvp.md](docs/mvp.md).
+> Entenda o escopo e as limitações em [docs/mvp.md](docs/mvp.md) (objetivo, tecnologias e atalhos).
 
 ## Tecnologias
 
